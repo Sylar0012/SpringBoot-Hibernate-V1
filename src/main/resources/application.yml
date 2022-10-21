@@ -2,3 +2,19 @@ server:
   port: 8000
   servlet:
     context-path: /
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/greendb
+    username: green
+    password: green1234
+  jpa:
+    hibernate:
+      ddl-auto: create
+  output:
+    ansi:
+      enabled: always
+logging:
+  level:
+    root: DEBUG

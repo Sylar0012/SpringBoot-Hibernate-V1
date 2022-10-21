@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WhiteApplication {
 
 	public static void main(String[] args) {
-		System.out.println("메롱 : main()");
 		SpringApplication.run(WhiteApplication.class, args);
 	}
 
