@@ -16,4 +16,11 @@ public class BoardRepository {
   public void save(Board board) {
     em.persist(board); // insert됨
   }
+
+  public Board findById(Long id) {
+    Board boardPS = em.createQuery("SELECT b FROM Board b WHERE b.id = :id", Board.class)
+        .setParameter("id", id)
+        .getSingleResult();
+    return boardPS;
+  }
 }

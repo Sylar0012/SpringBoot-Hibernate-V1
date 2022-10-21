@@ -1,5 +1,7 @@
 package site.metacoding.white.web;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,5 +20,10 @@ public class BoardApiController {
   public String save(@RequestBody Board board) { // @RequestBody : json 타입으로 전송
     boardService.save(board);
     return "ok";
+  }
+
+  @GetMapping("/board/{id}")
+  public Board findById(@PathVariable Long id) {
+    return boardService.findById(id);
   }
 }
