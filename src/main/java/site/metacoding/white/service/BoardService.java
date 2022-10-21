@@ -21,4 +21,16 @@ public class BoardService {
   public Board findById(Long id) {
     return boardRepository.findById(id);
   }
+
+  @Transactional
+  public void update(Long id, Board board) {
+
+    // 영속화
+    Board boardPS = boardRepository.findById(id);
+
+    // 영속화된 데이터를 클라이언트가 보낸 데이터로 수정
+    boardPS.setTitle(board.getTitle());
+    boardPS.setContent(board.getContent());
+    boardPS.setAuthor(board.getAuthor());
+  }// 트렌젝션 종료시 -> 더티체킹을 함.
 }

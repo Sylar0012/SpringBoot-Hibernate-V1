@@ -1,5 +1,7 @@
 package site.metacoding.white.domain;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -23,4 +25,5 @@ public class BoardRepository {
         .getSingleResult();
     return boardPS;
   }
+
 }
