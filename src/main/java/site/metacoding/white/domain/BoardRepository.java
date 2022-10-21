@@ -26,4 +26,15 @@ public class BoardRepository {
     return boardPS;
   }
 
+  public void deleteById(Long id) {
+    em.createQuery("delete from Board b where b.id = :id")
+        .setParameter("id", id)
+        .executeUpdate();
+  }
+
+  public List<Board> findAll() {
+    List<Board> boardPS = em.createQuery("SELECT b FROM Board b", Board.class)
+        .getResultList();
+    return boardPS;
+  }
 }

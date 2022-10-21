@@ -1,5 +1,7 @@
 package site.metacoding.white.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,4 +35,13 @@ public class BoardService {
     boardPS.setContent(board.getContent());
     boardPS.setAuthor(board.getAuthor());
   }// 트렌젝션 종료시 -> 더티체킹을 함.
+
+  public List<Board> findAll() {
+    return boardRepository.findAll();
+  }
+
+  @Transactional
+  public void deleteById(Long id) {
+    boardRepository.deleteById(id);
+  }
 }
