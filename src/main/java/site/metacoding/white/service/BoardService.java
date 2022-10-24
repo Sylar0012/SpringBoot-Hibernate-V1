@@ -33,7 +33,6 @@ public class BoardService {
     // 영속화된 데이터를 클라이언트가 보낸 데이터로 수정
     boardPS.setTitle(board.getTitle());
     boardPS.setContent(board.getContent());
-    boardPS.setAuthor(board.getAuthor());
   }// 트렌젝션 종료시 -> 더티체킹을 함.
 
   public List<Board> findAll() {
