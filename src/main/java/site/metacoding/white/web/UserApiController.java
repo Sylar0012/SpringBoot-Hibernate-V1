@@ -26,15 +26,16 @@ public class UserApiController {
   private final UserService userService;
   private final HttpSession session;
 
-  @PostMapping("/user/save")
+  @PostMapping("/save")
   public String save(@RequestBody User user) { // @RequestBody : json 타입으로 전송
     userService.save(user);
     return "ok";
   }
 
-  @PostMapping("/user/login")
+  @PostMapping("/login")
   public String login(@RequestBody User user) {
-    session.setAttribute("principal", userService.login(user));
+    User principal = userService.login(user);
+    session.setAttribute("principal", principal);
     return "ok";
   }
 

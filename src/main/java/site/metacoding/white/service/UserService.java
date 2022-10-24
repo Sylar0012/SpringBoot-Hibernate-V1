@@ -21,9 +21,13 @@ public class UserService {
     userRepository.save(user);
   } // 트랜잭션 종료
 
-  @Transactional
+  @Transactional(readOnly = true)
   public User login(User user) {
-    userRepository.login(user);
-    return user;
+    User userPS = userRepository.findByUsername(user.getUsername());
+    if (userPS.getPassword().equals(user.getPassword())) {
+      return userPS;
+    } else {
+      throw new RuntimeException("아이디 혹은 패스워드가 잘못 입력되었습니다.");
+    }
   }
 }

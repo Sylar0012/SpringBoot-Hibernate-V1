@@ -19,10 +19,10 @@ public class UserRepository {
     em.persist(user); // insert됨
   }
 
-  public void login(User user) {
-    em.createQuery("select u from User u where u.username = :username and u.password = :password")
-        .setParameter("username", user.getUsername())
-        .setParameter("password", user.getPassword())
+  public User findByUsername(String username) {
+  return  em.createQuery("select u from User u where u.username = :username", User.class)
+        .setParameter("username", username)
         .getSingleResult();
   }
+
 }
