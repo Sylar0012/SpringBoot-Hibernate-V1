@@ -17,7 +17,10 @@ import site.metacoding.white.domain.Board;
 import site.metacoding.white.dto.ResponseDto;
 import site.metacoding.white.dto.SessionUser;
 import site.metacoding.white.dto.BoardReqDto.BoardSaveReqDto;
+import site.metacoding.white.dto.BoardReqDto.BoardUpdateReqDto;
+import site.metacoding.white.dto.BoardRespDto.BoardDetailRespDto;
 import site.metacoding.white.dto.BoardRespDto.BoardSaveRespDto;
+import site.metacoding.white.dto.BoardRespDto.BoardUpdateRespDto;
 import site.metacoding.white.service.BoardService;
 
 @RequiredArgsConstructor
@@ -36,14 +39,14 @@ public class BoardApiController {
   }
 
   @GetMapping("/board/{id}")
-  public Board findById(@PathVariable Long id) {
+  public BoardDetailRespDto findById(@PathVariable Long id) {
     return boardService.findById(id);
   }
 
   @PutMapping("/board/{id}")
-  public String update(@PathVariable Long id, @RequestBody Board board) {
-    boardService.update(id, board);
-    return "ok";
+  public ResponseDto<?> update(@PathVariable Long id, @RequestBody BoardUpdateReqDto boardUpdateReqDto) {
+    BoardUpdateRespDto boardUpdateRespDto = boardService.update(id, boardUpdateReqDto);
+    return new ResponseDto<>(1, "성공", boardUpdateRespDto);
   }
 
   @GetMapping("/board/list")

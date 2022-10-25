@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
+import site.metacoding.white.dto.BoardRespDto.BoardDetailRespDto;
 
 @RequiredArgsConstructor
 @Repository
@@ -21,10 +22,11 @@ public class BoardRepository {
   }
 
   public Board findById(Long id) {
-    Board boardPS = em.createQuery("SELECT b FROM Board b WHERE b.id = :id", Board.class)
+    Board board = em
+        .createQuery("SELECT b FROM Board b WHERE b.id = :id", Board.class)
         .setParameter("id", id)
         .getSingleResult();
-    return boardPS;
+    return board;
   }
 
   public void deleteById(Long id) {

@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import site.metacoding.white.domain.Board;
 import site.metacoding.white.domain.BoardRepository;
-
 import site.metacoding.white.dto.BoardReqDto.BoardSaveReqDto;
+import site.metacoding.white.dto.BoardReqDto.BoardUpdateReqDto;
+import site.metacoding.white.dto.BoardRespDto.BoardDetailRespDto;
 import site.metacoding.white.dto.BoardRespDto.BoardSaveRespDto;
+import site.metacoding.white.dto.BoardRespDto.BoardUpdateRespDto;
 
 @RequiredArgsConstructor
 @Service // 컴퍼넌트 스캔.
@@ -31,22 +33,29 @@ public class BoardService {
   }
 
   @Transactional(readOnly = true) // 세션 종료 안됨
-  public Board findById(Long id) {
+  public BoardDetailRespDto findById(Long id) {
     Board boardPS = boardRepository.findById(id); // 오픈 인뷰가 false니까 조회후 세션 종료
-    boardPS.getUser().getUsername(); // Lazy 로딩됨. (근데 Eager이면 이미 로딩되서 select 두번 됨
+    BoardDetailRespDto boardDetailRespDto = new BoardDetailRespDto(boardPS);
+    // Lazy 로딩됨. (근데 Eager이면 이미 로딩되서 select 두번 됨
+
     // 4. user select 됨?
     System.out.println("서비스단에서 지연로딩 함. 왜? 여기까지는 디비커넥션이 유지되니까");
-    return boardPS;
+    return boardDetailRespDto;
   }
 
   @Transactional
-  public void update(Long id, Board board) {
+  public BoardUpdateRespDto update(Long id, BoardUpdateReqDto boardUpdateReqDto) {
 
     // 영속화
     Board boardPS = boardRepository.findById(id);
 
     // 영속화된 데이터를 클라이언트가 보낸 데이터로 수정
-    boardPS.update(board.getTitle(), board.getContent());
+
+    boardPS.update(boardUpdateReqDto.getTitle(), boardUpdateReqDto.getContent());
+
+    BoardUpdateRespDto boardUpdateRespDto = new BoardUpdateRespDto(boardPS);
+
+    return boardUpdateRespDto;
   }// 트렌젝션 종료시 -> 더티체킹을 함.
 
   public List<Board> findAll() {

@@ -18,4 +18,5 @@ public class SessionUser {
   public User toEntity() {
     return User.builder().id(id).username(username).build();
   }
+
 }
