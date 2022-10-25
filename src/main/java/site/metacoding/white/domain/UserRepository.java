@@ -28,4 +28,10 @@ public class UserRepository {
         .getSingleResult();
   }
 
+  public User findById(Long id) {
+    return em.createQuery("select u from User u where u.id=:id", User.class)
+        .setParameter("id", id)
+        .getSingleResult();
+  }
+
 }

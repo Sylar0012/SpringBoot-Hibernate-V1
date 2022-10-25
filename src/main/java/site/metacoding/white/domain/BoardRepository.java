@@ -15,8 +15,9 @@ public class BoardRepository {
   private final EntityManager em;
   // DB에서 들고온 다른 오브젝트를 자바 오브젝트로 바꿔줌.
 
-  public void save(Board board) {
+  public Board save(Board board) {
     em.persist(board); // insert됨
+    return board;
   }
 
   public Board findById(Long id) {

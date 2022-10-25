@@ -8,11 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
-@Setter
 @Entity
 public class Board {
   @Id
@@ -24,4 +25,19 @@ public class Board {
 
   @ManyToOne(fetch = FetchType.EAGER)
   private User user;
+
+  @Builder
+  public Board(Long id, String title, String content, User user) {
+    this.id = id;
+    this.title = title;
+    this.content = content;
+    this.user = user;
+  }
+
+  // 변경하는 코드는 의미 있게 메서드로 구현
+  public void update(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
+
 }
