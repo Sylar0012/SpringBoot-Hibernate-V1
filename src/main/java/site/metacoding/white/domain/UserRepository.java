@@ -20,7 +20,7 @@ public class UserRepository {
   }
 
   public User findByUsername(String username) {
-  return  em.createQuery("select u from User u where u.username = :username", User.class)
+    return em.createQuery("select u from User u where u.username = :username", User.class)
         .setParameter("username", username)
         .getSingleResult();
   }

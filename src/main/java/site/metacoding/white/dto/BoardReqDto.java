@@ -8,23 +8,10 @@ public class BoardReqDto {
 
   @Getter
   @Setter
-  public static class BoardSaveDto {
+  public static class BoardSaveReqDto {
     private String title;
     private String content;
-
-    private ServiceDto serviceDto;
-
-    // 클라이언트 한테 받는거 아님
-    @Getter
-    @Setter
-    public class ServiceDto {
-      private User user;
-    }
-
-    public void newInstance() {
-      serviceDto = new ServiceDto();
-    }
-
+    private User user;
   }
 
   // DTO는 여기다 추가.
