@@ -2,8 +2,6 @@ package site.metacoding.white.util;
 
 import org.junit.jupiter.api.Test;
 
-import site.metacoding.white.domain.User;
-
 class MyUser {
   private Long id;
   private String username;
@@ -34,6 +32,5 @@ public class BuilderTest {
   @Test
   public void 빌더_테스트() {
     MyUser.builder().id(1L).username("ssar").password("1234");
-
   }
 }
