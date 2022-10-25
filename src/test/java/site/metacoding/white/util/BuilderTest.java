@@ -33,7 +33,7 @@ public class BuilderTest {
 
   @Test
   public void 빌더_테스트() {
-    MyUser.builder().id(1L).username("ssar").password("1234").builder();
+    MyUser.builder().id(1L).username("ssar").password("1234");
 
   }
 }

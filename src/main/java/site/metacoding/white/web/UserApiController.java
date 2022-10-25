@@ -2,6 +2,8 @@ package site.metacoding.white.web;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import site.metacoding.white.domain.User;
 import site.metacoding.white.dto.UserReqDto.JoinReqDto;
+import site.metacoding.white.dto.UserReqDto.LoginReqDto;
 import site.metacoding.white.service.UserService;
 
 @RequiredArgsConstructor
@@ -19,14 +22,14 @@ public class UserApiController {
   private final HttpSession session;
 
   @PostMapping("/join")
-  public String join(@RequestBody JoinReqDto joinReqDto) { // @RequestBody : json 타입으로 전송
-    userService.join(joinReqDto);
-    return "ok";
+  public ResponseEntity<?> save(@RequestBody JoinReqDto joinReqDto) { // @RequestBody : json 타입으로 전송
+    User userPS = userService.save(joinReqDto);
+    return new ResponseEntity<>(userPS, HttpStatus.CREATED);
   }
 
   @PostMapping("/login")
-  public String login(@RequestBody User user) {
-    User principal = userService.login(user);
+  public String login(@RequestBody LoginReqDto loginReqDto) {
+    User principal = userService.login(loginReqDto);
     session.setAttribute("principal", principal);
     return "ok";
   }

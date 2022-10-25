@@ -19,9 +19,8 @@ public class UserReqDto {
 
   @Getter
   @Setter
-  public static class JoinRespDto {
+  public static class LoginReqDto {
     private String username;
     private String password;
   }
-  // DTO는 여기다 추가.
 }
