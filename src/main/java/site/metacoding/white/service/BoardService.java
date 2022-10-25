@@ -18,7 +18,11 @@ public class BoardService {
 
   @Transactional
   public void save(BoardSaveDto boardSaveDto) {
-    // boardRepository.save(board);
+    Board board = new Board();
+    board.setTitle(boardSaveDto.getTitle());
+    board.setContent(boardSaveDto.getContent());
+    board.setUser(boardSaveDto.getServiceDto().getUser());
+    boardRepository.save(board);
   }
 
   public Board findById(Long id) {

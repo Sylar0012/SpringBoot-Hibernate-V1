@@ -26,9 +26,9 @@ public class UserApiController {
   private final UserService userService;
   private final HttpSession session;
 
-  @PostMapping("/save")
-  public String save(@RequestBody User user) { // @RequestBody : json 타입으로 전송
-    userService.save(user);
+  @PostMapping("/join")
+  public String join(@RequestBody User user) { // @RequestBody : json 타입으로 전송
+    userService.join(user);
     return "ok";
   }
 

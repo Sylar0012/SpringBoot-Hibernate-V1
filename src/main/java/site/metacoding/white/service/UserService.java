@@ -17,7 +17,7 @@ public class UserService {
   private final UserRepository userRepository;
 
   @Transactional // 트랜잭션을 붙이지 않으면 영속화 되어 있는 객체가 flush가 안됨.
-  public void save(User user) {
+  public void join(User user) {
     userRepository.save(user);
   } // 트랜잭션 종료
 
