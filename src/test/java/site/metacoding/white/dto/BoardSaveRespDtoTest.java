@@ -1,7 +1,6 @@
 package site.metacoding.white.dto;
 
 import site.metacoding.white.dto.BoardRespDto.BoardSaveRespDto;
-import site.metacoding.white.dto.BoardRespDto.UserDto;
 
 public class BoardSaveRespDtoTest {
 

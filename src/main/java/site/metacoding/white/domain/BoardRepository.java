@@ -1,6 +1,7 @@
 package site.metacoding.white.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
@@ -20,11 +21,11 @@ public class BoardRepository {
     return board;
   }
 
-  public Board findById(Long id) {
-    Board boardPS = em.createQuery("SELECT b FROM Board b WHERE b.id = :id", Board.class)
+  public Optional<Board> findById(Long id) {
+    Optional<Board> boardOP = Optional.of(em.createQuery("SELECT b FROM Board b WHERE b.id = :id", Board.class)
         .setParameter("id", id)
-        .getSingleResult();
-    return boardPS;
+        .getSingleResult());
+    return boardOP;
   }
 
   public void deleteById(Long id) {
