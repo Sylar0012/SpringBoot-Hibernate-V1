@@ -8,14 +8,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import site.metacoding.white.domain.Board;
 import site.metacoding.white.domain.BoardRepository;
 
 import site.metacoding.white.dto.BoardReqDto.BoardSaveReqDto;
+import site.metacoding.white.dto.BoardReqDto.BoardUpdateReqDto;
 import site.metacoding.white.dto.BoardRespDto.BoardAllRespDto;
 import site.metacoding.white.dto.BoardRespDto.BoardDetailRespDto;
 import site.metacoding.white.dto.BoardRespDto.BoardSaveRespDto;
+import site.metacoding.white.dto.BoardRespDto.BoardUpdateRespDto;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service // 컴퍼넌트 스캔.
 public class BoardService {
@@ -51,12 +55,13 @@ public class BoardService {
   }
 
   @Transactional
-  public void update(Long id, Board board) {
-
-    // 영속화
+  public BoardUpdateRespDto update(BoardUpdateReqDto boardUpdateReqDto) {
+    Long id = boardUpdateReqDto.getId();
     Optional<Board> boardOP = boardRepository.findById(id); // 오픈 인뷰가 false니까 조회후 세션 종료
     if (boardOP.isPresent()) {
-      boardOP.get().update(board.getTitle(), board.getContent());
+      Board boardPS = boardOP.get();
+      boardPS.update(boardUpdateReqDto.getTitle(), boardUpdateReqDto.getContent());
+      return new BoardUpdateRespDto(boardPS);
     } else {
       throw new RuntimeException("해당 " + id + "의 게시글을 수정 할 수 없습니다");
     }
@@ -79,6 +84,15 @@ public class BoardService {
 
   @Transactional
   public void deleteById(Long id) {
-    boardRepository.deleteById(id);
+
+    Optional<Board> boardOP = boardRepository.findById(id); // 오픈 인뷰가 false니까 조회후 세션 종료
+    if (boardOP.isPresent()) {
+
+      boardRepository.deleteById(id);
+    } else {
+      throw new RuntimeException("해당 " + id + "로 삭제 할 수 없습니다");
+    }
+
   }
+
 }

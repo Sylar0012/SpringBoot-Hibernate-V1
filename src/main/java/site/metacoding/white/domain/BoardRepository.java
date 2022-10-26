@@ -22,10 +22,15 @@ public class BoardRepository {
   }
 
   public Optional<Board> findById(Long id) {
-    Optional<Board> boardOP = Optional.of(em.createQuery("SELECT b FROM Board b WHERE b.id = :id", Board.class)
-        .setParameter("id", id)
-        .getSingleResult());
-    return boardOP;
+    try {
+      Optional<Board> boardOP = Optional.of(em.createQuery("SELECT b FROM Board b WHERE b.id = :id", Board.class)
+          .setParameter("id", id)
+          .getSingleResult());
+      return boardOP;
+    } catch (Exception e) {
+      return Optional.empty();
+    }
+
   }
 
   public void deleteById(Long id) {

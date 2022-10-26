@@ -18,6 +18,7 @@ import site.metacoding.white.dto.BoardRespDto;
 import site.metacoding.white.dto.ResponseDto;
 import site.metacoding.white.dto.SessionUser;
 import site.metacoding.white.dto.BoardReqDto.BoardSaveReqDto;
+import site.metacoding.white.dto.BoardReqDto.BoardUpdateReqDto;
 import site.metacoding.white.dto.BoardRespDto.BoardAllRespDto;
 import site.metacoding.white.dto.BoardRespDto.BoardDetailRespDto;
 import site.metacoding.white.dto.BoardRespDto.BoardSaveRespDto;
@@ -45,9 +46,9 @@ public class BoardApiController {
   }
 
   @PutMapping("/board/{id}")
-  public String update(@PathVariable Long id, @RequestBody Board board) {
-    boardService.update(id, board);
-    return "ok";
+  public ResponseDto<?> update(@PathVariable Long id, @RequestBody BoardUpdateReqDto boardUpdateReqDto) {
+    boardUpdateReqDto.setId(id);
+    return new ResponseDto<>(1, "성공", boardService.update(boardUpdateReqDto));
   }
 
   @GetMapping("/board/list")
@@ -57,8 +58,8 @@ public class BoardApiController {
   }
 
   @DeleteMapping("/board/{id}")
-  public String deleteById(@PathVariable Long id) {
+  public ResponseDto<?> deleteById(@PathVariable Long id) {
     boardService.deleteById(id);
-    return "ok";
+    return new ResponseDto<>(1, "성공", null);
   }
 }

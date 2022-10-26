@@ -30,6 +30,10 @@ public class UserApiController {
     return new ResponseDto<>(1, "ok", joinRespDto);
   }
 
+  // 회원정보 수정
+
+  // 회원정보 보기
+
   @PostMapping("/login")
   public ResponseDto<?> login(@RequestBody LoginReqDto loginReqDto) {
     SessionUser sessionUser = userService.login(loginReqDto);
