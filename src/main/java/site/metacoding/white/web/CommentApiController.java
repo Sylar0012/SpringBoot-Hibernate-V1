@@ -24,6 +24,9 @@ public class CommentApiController {
   @PostMapping("/comment")
   public ResponseDto<?> save(@RequestBody CommentSaveReqDto commentSaveReqDto) {
     SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+    if (sessionUser == null) {
+      new ResponseDto<>(-1, "로그인이 되지 않았습니다.", null);
+    }
     commentSaveReqDto.setSessionUser(sessionUser);
     return new ResponseDto<>(1, "성공", commentService.save(commentSaveReqDto));
 
@@ -31,6 +34,10 @@ public class CommentApiController {
 
   @DeleteMapping("/comment/{id}")
   public ResponseDto<?> deleteById(@PathVariable Long id) {
+    SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+    if (sessionUser == null) {
+      new ResponseDto<>(-1, "로그인이 되지 않았습니다.", null);
+    }
     commentService.deleteById(id);
     return new ResponseDto<>(1, "성공", null);
   }

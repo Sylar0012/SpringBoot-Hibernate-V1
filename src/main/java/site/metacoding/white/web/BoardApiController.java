@@ -35,6 +35,9 @@ public class BoardApiController {
   @PostMapping("/board")
   public ResponseDto<?> save(@RequestBody BoardSaveReqDto boardSaveReqDto) {
     SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+    if (sessionUser == null) {
+      new ResponseDto<>(-1, "로그인이 되지 않았습니다.", null);
+    }
     boardSaveReqDto.setSessionUser(sessionUser);
     BoardSaveRespDto boardSaveRespDto = boardService.save(boardSaveReqDto); // 서비스에는 단 하나의 객체만 전달한다.
     return new ResponseDto<>(1, "성공", boardSaveRespDto);
@@ -43,12 +46,20 @@ public class BoardApiController {
   // 게시글 상세보기 ( Board + User + List<comment> )
   @GetMapping("/board/{id}")
   public ResponseDto<?> findById(@PathVariable Long id) {
+    SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+    if (sessionUser == null) {
+      new ResponseDto<>(-1, "로그인이 되지 않았습니다.", null);
+    }
     BoardDetailRespDto boardDetailRespDto = boardService.findById(id);
     return new ResponseDto<>(1, "성공", boardDetailRespDto);
   }
 
   @PutMapping("/board/{id}")
   public ResponseDto<?> update(@PathVariable Long id, @RequestBody BoardUpdateReqDto boardUpdateReqDto) {
+    SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+    if (sessionUser == null) {
+      new ResponseDto<>(-1, "로그인이 되지 않았습니다.", null);
+    }
     boardUpdateReqDto.setId(id);
     return new ResponseDto<>(1, "성공", boardService.update(boardUpdateReqDto));
   }
@@ -61,6 +72,10 @@ public class BoardApiController {
 
   @DeleteMapping("/board/{id}")
   public ResponseDto<?> deleteById(@PathVariable Long id) {
+    SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+    if (sessionUser == null) {
+      new ResponseDto<>(-1, "로그인이 되지 않았습니다.", null);
+    }
     boardService.deleteById(id);
     return new ResponseDto<>(1, "성공", null);
   }
