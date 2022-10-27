@@ -94,7 +94,8 @@ public class BoardRespDto {
       this.title = board.getTitle();
       this.content = board.getContent();
       this.user = new BoardUserDto(board.getUser());
-      this.comment = board.getComments().stream().map((comment) -> new CommentDto(comment))
+      this.comment = board.getComments().stream().map(
+          (comment) -> new CommentDto(comment))
           .collect(Collectors.toList());
     }
   }
