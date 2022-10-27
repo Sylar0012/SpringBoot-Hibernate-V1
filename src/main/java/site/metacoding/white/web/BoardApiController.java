@@ -39,6 +39,7 @@ public class BoardApiController {
     return new ResponseDto<>(1, "성공", boardSaveRespDto);
   }
 
+  // 게시글 상세보기 ( Board + User + List<comment> )
   @GetMapping("/board/{id}")
   public ResponseDto<?> findById(@PathVariable Long id) {
     BoardDetailRespDto boardDetailRespDto = boardService.findById(id);

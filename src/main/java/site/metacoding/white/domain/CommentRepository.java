@@ -21,7 +21,6 @@ public class CommentRepository {
   }
 
   // 댓글 찾기
-
   public Optional<Comment> findById(Long id) {
     try {
       Optional<Comment> commentOP = Optional
