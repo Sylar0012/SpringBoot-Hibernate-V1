@@ -41,4 +41,15 @@ public class CommentService {
 
   }
 
+  @Transactional
+  public void deleteById(Long id) {
+    Optional<Comment> commentOP = commentRepository.findById(id);
+    if (commentOP.isPresent()) {
+      commentRepository.deleteById(id);
+    } else {
+      throw new RuntimeException("해당 " + id + "로 삭제 할 수 없습니다.");
+    }
+
+  }
+
 }

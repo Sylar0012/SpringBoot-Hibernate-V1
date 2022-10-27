@@ -1,5 +1,7 @@
 package site.metacoding.white.domain;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -16,6 +18,20 @@ public class CommentRepository {
   public Comment save(Comment comment) {
     em.persist(comment); // insert됨
     return comment;
+  }
+
+  // 댓글 찾기
+
+  public Optional<Comment> findById(Long id) {
+    try {
+      Optional<Comment> commentOP = Optional
+          .of(em.createQuery("SELECT b FROM Comment b WHERE b.id = :id", Comment.class)
+              .setParameter("id", id)
+              .getSingleResult());
+      return commentOP;
+    } catch (Exception e) {
+      return Optional.empty();
+    }
   }
 
   // 댓글 삭제
