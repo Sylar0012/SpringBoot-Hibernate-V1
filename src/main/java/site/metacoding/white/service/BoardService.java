@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import site.metacoding.white.domain.Board;
 import site.metacoding.white.domain.BoardRepository;
-
+import site.metacoding.white.domain.Comment;
 import site.metacoding.white.dto.BoardReqDto.BoardSaveReqDto;
 import site.metacoding.white.dto.BoardReqDto.BoardUpdateReqDto;
 import site.metacoding.white.dto.BoardRespDto.BoardAllRespDto;
@@ -80,6 +80,10 @@ public class BoardService {
     }
     // 3. DTO를 List에 담기
     return boardAllRespDtoList;
+  }
+
+  public void addComment(Comment comment) {
+    // this.comments.add(comment);
   }
 
   @Transactional

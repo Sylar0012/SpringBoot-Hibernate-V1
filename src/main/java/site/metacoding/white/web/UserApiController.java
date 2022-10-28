@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,8 +13,10 @@ import lombok.RequiredArgsConstructor;
 import site.metacoding.white.domain.User;
 import site.metacoding.white.dto.ResponseDto;
 import site.metacoding.white.dto.SessionUser;
+import site.metacoding.white.dto.UserRespDto.UpdateRespDto;
 import site.metacoding.white.dto.UserReqDto.JoinReqDto;
 import site.metacoding.white.dto.UserReqDto.LoginReqDto;
+import site.metacoding.white.dto.UserReqDto.UpdateReqDto;
 import site.metacoding.white.dto.UserRespDto.JoinRespDto;
 import site.metacoding.white.service.UserService;
 
@@ -31,6 +34,11 @@ public class UserApiController {
   }
 
   // 회원정보 수정
+  @PutMapping("/update")
+  public ResponseDto<?> update(@RequestBody UpdateReqDto updateReqDto) {
+    UpdateRespDto updateRespDto = userService.update(updateReqDto);
+    return new ResponseDto<>(1, "ok", updateRespDto);
+  }
 
   // 회원정보 보기
 

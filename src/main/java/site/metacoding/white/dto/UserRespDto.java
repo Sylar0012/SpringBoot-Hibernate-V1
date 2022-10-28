@@ -20,4 +20,18 @@ public class UserRespDto {
 
   }
 
+  @Getter
+  @Setter
+  public static class UpdateRespDto {
+    private Long id;
+    private String username;
+    private String password;
+
+    public UpdateRespDto(User user) {
+      this.id = user.getId();
+      this.username = user.getUsername();
+      this.password = user.getPassword();
+    }
+  }
+
 }

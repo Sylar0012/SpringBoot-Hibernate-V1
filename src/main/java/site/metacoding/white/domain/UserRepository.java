@@ -1,5 +1,7 @@
 package site.metacoding.white.domain;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -28,10 +30,16 @@ public class UserRepository {
         .getSingleResult();
   }
 
-  public User findById(Long id) {
-    return em.createQuery("select u from User u where u.id=:id", User.class)
-        .setParameter("id", id)
-        .getSingleResult();
+  public Optional<User> findById(Long id) {
+    try {
+      Optional<User> userOP = Optional.of(
+          em.createQuery("select u from User u where u.id=:id", User.class)
+              .setParameter("id", id)
+              .getSingleResult());
+      return userOP;
+    } catch (Exception e) {
+      return Optional.empty();
+    }
   }
 
 }
