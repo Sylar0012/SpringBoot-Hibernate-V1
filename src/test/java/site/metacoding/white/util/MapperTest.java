@@ -4,8 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// 스프링에서 DB -> rs -> Entity (전략 : 디폴트 생성자를 호출한 뒤 setter)
+
+@NoArgsConstructor
 @Setter
 @Getter
 class Product {
@@ -32,9 +36,7 @@ class ProductDto {
     private String name;
     private Integer price;
     private Integer qty;
-    // product -> ProductDto로 변경
 
-    // 생성자를 받아냄
     public ProductDto(Product product) {
         this.name = product.getName();
         this.price = product.getPrice();
@@ -42,12 +44,11 @@ class ProductDto {
     }
 
     public Product toEntity() {
-        Product product = Product.builder()
+        return Product.builder()
                 .name(name)
                 .price(price)
                 .qty(qty)
                 .build();
-        return product;
     }
 
 }
@@ -62,13 +63,12 @@ public class MapperTest {
     @Test
     public void 매핑하기1() {
         // 1. Product 객체생성 (디폴트)
-        // 2. 값 넣기
         Product product = Product.builder()
                 .id(1)
+                .mcp("삼성")
                 .name("바나나")
                 .price(1000)
                 .qty(100)
-                .mcp("삼성")
                 .build();
 
         // 3. ProductDto 객체생성 (디폴트)
@@ -76,6 +76,5 @@ public class MapperTest {
 
         // 5. ProductDto -> product 변경
         Product product2 = productDto.toEntity();
-
     }
 }
