@@ -4,7 +4,6 @@ import javax.transaction.Transactional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,10 +22,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
+import lombok.extern.slf4j.Slf4j;
 import site.metacoding.white.dto.UserReqDto.JoinReqDto;
 import site.metacoding.white.dto.UserReqDto.LoginReqDto;
 import site.metacoding.white.service.UserService;
 
+@Slf4j
 @ActiveProfiles("test")
 @Transactional // 통합테스트에서 RANDOM_PORT를 사용하면 새로운 스레드로 돌기 때문에 rollback 무의미
 @Sql("classpath:truncate.sql")
@@ -95,8 +96,7 @@ public class UserApiControllerTest {
         ResponseEntity<String> response = rt.exchange("/login", HttpMethod.POST,
                 request, String.class);
 
-        System.out.println("디버그 : " + response.getBody());
-
+        log.debug("디버그 : 첫번째 커서" + response.getBody());
         // then
         DocumentContext dc = JsonPath.parse(response.getBody());
         Integer code = dc.read("$.code");
