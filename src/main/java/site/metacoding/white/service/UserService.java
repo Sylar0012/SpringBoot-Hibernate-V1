@@ -39,15 +39,22 @@ public class UserService {
     return new JoinRespDto(userPS);
   } // 트랜잭션 종료
 
+  // 유저서비스
   @Transactional(readOnly = true)
   public SessionUser login(LoginReqDto loginReqDto) {
-    User userPS = userRepository.findByUsername(loginReqDto.getUsername());
-    if (userPS.getPassword().equals(sha256.encrypt(loginReqDto.getPassword()))) {
-      return new SessionUser(userPS);
-    } else {
+    String encPassword = sha256.encrypt(loginReqDto.getPassword());
+    Optional<User> userOP = userRepository.findByUsername(loginReqDto.getUsername());
+    if (userOP.isEmpty()) {
       throw new RuntimeException("아이디 혹은 패스워드가 잘못 입력되었습니다.");
     }
-  }
+
+    User userPS = userOP.get();
+    if (!userPS.getPassword().equals(encPassword)) {
+      throw new RuntimeException("아이디 혹은 패스워드가 잘못 입력되었습니다.");
+    }
+
+    return new SessionUser(userPS);
+  } // 트랜잭션 종료
 
   public UpdateRespDto update(UpdateReqDto updateReqDto) {
     Long id = updateReqDto.getId();

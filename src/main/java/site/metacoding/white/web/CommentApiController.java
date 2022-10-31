@@ -21,7 +21,7 @@ public class CommentApiController {
   private final CommentService commentService;
   private final HttpSession session;
 
-  @PostMapping("/comment")
+  @PostMapping("/s/comment")
   public ResponseDto<?> save(@RequestBody CommentSaveReqDto commentSaveReqDto) {
     SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
     if (sessionUser == null) {
@@ -32,7 +32,7 @@ public class CommentApiController {
 
   }
 
-  @DeleteMapping("/comment/{id}")
+  @DeleteMapping("/s/comment/{id}")
   public ResponseDto<?> deleteById(@PathVariable Long id) {
     SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
     if (sessionUser == null) {

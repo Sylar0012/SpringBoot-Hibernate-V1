@@ -31,6 +31,7 @@ public class Board {
   @Column(length = 1000)
   private String content;
 
+  @OnDelete(action = OnDeleteAction.CASCADE)
   @ManyToOne(fetch = FetchType.LAZY)
   private User user;
 

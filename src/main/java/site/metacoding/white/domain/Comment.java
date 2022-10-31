@@ -25,6 +25,7 @@ public class Comment {
   private String content;
 
   // User 누가 했는지
+  @OnDelete(action = OnDeleteAction.CASCADE)
   @ManyToOne(fetch = FetchType.LAZY)
   private User user;
 

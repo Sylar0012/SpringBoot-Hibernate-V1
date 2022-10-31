@@ -70,6 +70,7 @@ public class BoardService {
 
   }// 트렌젝션 종료시 -> 더티체킹을 함.
 
+  @Transactional(readOnly = true)
   public List<BoardAllRespDto> findAll() {
     List<Board> boardList = boardRepository.findAll();
     List<BoardAllRespDto> boardAllRespDtoList = new ArrayList<>();
@@ -87,14 +88,24 @@ public class BoardService {
   }
 
   @Transactional
-  public void deleteById(Long id) {
-
+  public void deleteById(Long id, Long userId) {
+    log.debug("디버그 : userId(service) : " + userId);
+    log.debug("디버그 : boardId(service) : " + id);
     Optional<Board> boardOP = boardRepository.findById(id); // 오픈 인뷰가 false니까 조회후 세션 종료
+    log.debug("디버그 : 이거 실행되냐? 111");
     if (boardOP.isPresent()) {
+      log.debug("디버그 : 이거 실행되냐? 222");
+      Board boardPS = boardOP.get();
+      log.debug("디버그 : 이거 실행되냐? 333");
+      if (boardPS.getUser().getId() != userId) {
 
-      boardRepository.deleteById(id);
+        throw new RuntimeException("해당 게시글을 삭제할 권한이 없습니다.");
+      } else {
+        boardRepository.deleteById(id);
+      }
+
     } else {
-      throw new RuntimeException("해당 " + id + "로 삭제 할 수 없습니다");
+      throw new RuntimeException("해당 " + id + "으로 삭제 할 수 없습니다");
     }
 
   }

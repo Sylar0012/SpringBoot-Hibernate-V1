@@ -30,7 +30,7 @@ public class BoardApiController {
   private final BoardService boardService;
   private final HttpSession session;
 
-  @PostMapping("/board")
+  @PostMapping("/s/board")
   public ResponseDto<?> save(@RequestBody BoardSaveReqDto boardSaveReqDto) {
     SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
     if (sessionUser == null) {
@@ -52,7 +52,7 @@ public class BoardApiController {
     return new ResponseDto<>(1, "성공", boardDetailRespDto);
   }
 
-  @PutMapping("/board/{id}")
+  @PutMapping("/s/board/{id}")
   public ResponseDto<?> update(@PathVariable Long id, @RequestBody BoardUpdateReqDto boardUpdateReqDto) {
     SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
     if (sessionUser == null) {
@@ -68,13 +68,11 @@ public class BoardApiController {
     return new ResponseDto<>(1, "성공", boardAllRespDtoList);
   }
 
-  @DeleteMapping("/board/{id}")
+  @DeleteMapping("/s/board/{id}")
   public ResponseDto<?> deleteById(@PathVariable Long id) {
     SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
-    if (sessionUser == null) {
-      new ResponseDto<>(-1, "로그인이 되지 않았습니다.", null);
-    }
-    boardService.deleteById(id);
+    // 권한 관련 파라메터는 두번째 파라메터로 넘긴다. ( 컨트롤러 말고 서비스에서 권한체크 하란 소리 )
+    boardService.deleteById(id, sessionUser.getId());
     return new ResponseDto<>(1, "성공", null);
   }
 }
